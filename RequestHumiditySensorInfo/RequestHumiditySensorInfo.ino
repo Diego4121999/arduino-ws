@@ -51,7 +51,7 @@ void loop() {
     //join to make the temperature sample
     int32_t pressure = (psampMSB<<12)+(psampLSB<<4)+(psampXLSB>>4);
     // print the temperature sampling results
-    Serial.printf("Received (temperature sampling): %u\n", temp);
+    Serial.printf("Received (pressure sampling): %u\n", pressure);
   }
   // --Humidity Sampling--
   Wire.beginTransmission(0x76);
