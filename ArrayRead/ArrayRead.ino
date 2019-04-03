@@ -1,4 +1,5 @@
 #include <Wire.h>
+ static uint8_t arr[8];
 
 void setup() {
   // join i2c bus (address optional for master)
@@ -16,9 +17,19 @@ void setup() {
   Wire.endTransmission(0);
 }
 
+uint32_t mountvar(uint16_t pos,uint8_t flag){
+  static uint32_t cont;
+  if (flag=2){
+    cont=(arr[pos]<<8)+arr[pos+1];
+  }
+  if (flag=3){
+    cont=((arr[pos]<<16)+(arr[pos+1]<<8)+arr[pos+2])>>4;
+  }
+  return cont;
+}
+
 void loop() {
   // request the data from the directories
-  static uint8_t arr[128];
   uint16_t arr_i=0;
   Wire.requestFrom(0x76,8);
   if (Wire.available()<=8){
@@ -26,5 +37,8 @@ void loop() {
       arr[arr_i++]=Wire.read();
     }
   }
+  Serial.printf("Pressure: %u\n",mountvar(1,3));
+  Serial.printf("Temperature: %u\n",mountvar(4,3));
+  Serial.printf("Humidity: %u\n -----------------\n",mountvar(7,2));
   delay(1000);
 }
