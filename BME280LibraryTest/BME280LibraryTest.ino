@@ -39,10 +39,16 @@ void setup() {
 }
 
 void loop() {
+  /*Save the sampled data into variables*/
   float Temp=BME280_chip.readTempC();
   float Press=BME280_chip.readFloatPressure();
+  float Altitude=BME280_chip.readFloatAltitudeMeters();
+  float Humid=BME280_chip.readFloatHumidity();
+  /*Print the sampled variables*/
   Serial.printf("----------\n"
-  "Temperature: %f\n"
-  "Pressure: %f\n",Temp,Press);
+  "Temperature(ºC): %f\n"
+  "Pressure(kPa): %f\n"
+  "Altitude(m): %f\n"
+  "Humidity(%c): %f\n",Temp,Press,Altitude,37,Humid);
   delay(1000);
 }
